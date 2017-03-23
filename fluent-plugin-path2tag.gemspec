@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["shota.kuwahara@skuwa229.com"]
 
   spec.summary       = %q{Fluentd Output filter plugin.}
-  spec.homepage      = "http://skuwa229.com/"
+  spec.homepage      = "https://github.com/skuwa229/fluent-plugin-path2tag"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split("\n")
