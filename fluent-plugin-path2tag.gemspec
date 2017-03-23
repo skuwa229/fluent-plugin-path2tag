@@ -4,7 +4,7 @@
 $:.push File.expand_path("../lib", __FILE__)
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-path2tag"
-  spec.version       = "0.0.1"
+  spec.version       = "0.0.2"
   spec.authors       = ["Shota Kuwahara"]
   spec.email         = ["shota.kuwahara@skuwa229.com"]
 
