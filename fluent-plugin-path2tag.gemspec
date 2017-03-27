@@ -1,10 +1,11 @@
 # coding: utf-8
-#lib = File.expand_path("../lib", __FILE__)
-#$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-$:.push File.expand_path("../lib", __FILE__)
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'fluent/plugin/path2tag/version'
+
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-path2tag"
-  spec.version       = "0.0.2"
+  spec.version       = Fluent::Plugin::Path2tag::VERSION
   spec.authors       = ["Shota Kuwahara"]
   spec.email         = ["shota.kuwahara@skuwa229.com"]
 

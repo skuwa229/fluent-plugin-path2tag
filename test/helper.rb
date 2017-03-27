@@ -22,7 +22,7 @@ unless ENV.has_key?('VERBOSE')
   $log = nulllogger
 end
 
-require 'fluent/plugin/path2tag'
+require 'fluent/plugin/out_path2tag'
 
 class Test::Unit::TestCase
 end
