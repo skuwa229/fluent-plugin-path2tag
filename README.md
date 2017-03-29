@@ -1,18 +1,19 @@
 # fluent-plugin-path2tag
 
 ## Overview
+A fluent output filter plugin for Nginx's logging.  
+Convert uri to tag. And reformat json data.
 
 ## Installation
-
 ```
 # for system installed fluentd
 $ gem install fluent-plugin-path2tag
 
 # for td-agent (Legacy)
-$ sudo /usr/lib64/fluent/ruby/bin/fluent-gem install ffluent-plugin-path2tag -v 0.0.1
+$ sudo /usr/lib64/fluent/ruby/bin/fluent-gem install ffluent-plugin-path2tag -v 1.0.0
 
 # for td-agent2 (with fluentd v0.12)
-$ sudo td-agent-gem install fluent-plugin-path2tag -v 0.0.1
+$ sudo td-agent-gem install fluent-plugin-path2tag -v 1.0.0
 ```
 
 ## Configuration
@@ -20,7 +21,6 @@ $ sudo td-agent-gem install fluent-plugin-path2tag -v 0.0.1
 ### Syntax
 ```
 path2tag <path_key_name> <data_key_name>
-
 ```
 
 ### Usage
@@ -47,5 +47,4 @@ path2tag <path_key_name> <data_key_name>
 
 Copyright (c) 2017- Shota Kuwahara  
 [MIT License](http://opensource.org/licenses/MIT)
-
 
