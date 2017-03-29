@@ -37,10 +37,6 @@ path2tag <path_key_name> <data_key_name>
     @type path2tag
     path2tag request_uri request_body
 </match>
-
-<match path2tag.clear>
-  @type null
-</match>
 ```
 
 ## License
