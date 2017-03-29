@@ -1,7 +1,7 @@
 module Fluent
   module Plugin
     module Path2tag
-      VERSION = "0.0.3"
+      VERSION = "1.0.0"
     end
   end
 end

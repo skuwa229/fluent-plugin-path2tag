@@ -50,55 +50,106 @@ class Path2tagTest < Test::Unit::TestCase
 
   def test_emit_ok
     d1 = create_driver(CONFIG_OK, 'nginx.access')
+    body = '[{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}]'
     d1.run do
-      d1.emit({'request_uri' => '/logpose/endpoints/ios', 'request_body' => '{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}'})
+      d1.emit({'request_uri' => '/path/foo/bar', 'request_body' => body})
     end
     emits = d1.emits
     assert_equal 1, emits.length
-    assert_equal 'logpose.endpoints.ios', emits[0][0]
-    assert_equal '{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}', emits[0][2]
+    assert_equal 'path.foo.bar', emits[0][0]
+    assert_equal JSON.parse(body), emits[0][2]
   end
 
   def test_emit_no_path_key
     d1 = create_driver(CONFIG_NO_PATH_KEY, 'nginx.access')
+    body = '[{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}]'
     d1.run do
-      d1.emit({'request_uri' => '/logpose/endpoints/ios', 'request_body' => '{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}'})
+      d1.emit({'request_uri' => '/path/foo/bar', 'request_body' => body})
     end
     emits = d1.emits
-    assert_equal 1, emits.length
-    assert_equal 'path2tag.clear', emits[0][0]
+    assert_equal 0, emits.length
   end
 
   def test_emit_no_data_key
     d1 = create_driver(CONFIG_NO_DATA_KEY, 'nginx.access')
+    body = '[{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}]'
     d1.run do
-      d1.emit({'request_uri' => '/logpose/endpoints/ios', 'request_body' => '{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}'})
+      d1.emit({'request_uri' => '/path/foo/bar', 'request_body' => body})
     end
     emits = d1.emits
-    assert_equal 1, emits.length
-    assert_equal 'path2tag.clear', emits[0][0]
+    assert_equal 0, emits.length
   end
 
   def test_emit_path_format_1
     d1 = create_driver(CONFIG_OK, 'nginx.access')
+    body = '[{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}]'
     d1.run do
-       d1.emit({'request_uri' => '/logpose/endpoints/ios', 'request_body' => '{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}'})
+       d1.emit({'request_uri' => '/path/foo/bar', 'request_body' => body})
     end
     emits = d1.emits
     assert_equal 1, emits.length
-    assert_equal 'logpose.endpoints.ios', emits[0][0]
-    assert_equal '{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}', emits[0][2]
+    assert_equal 'path.foo.bar', emits[0][0]
+    assert_equal JSON.parse(body), emits[0][2]
   end
 
   def test_emit_path_format_2
     d1 = create_driver(CONFIG_OK, 'nginx.access')
+    body = '[{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}]'
     d1.run do
-       d1.emit({'request_uri' => 'logpose', 'request_body' => '{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}'})
+       d1.emit({'request_uri' => 'path/foo/bar', 'request_body' => body})
     end
     emits = d1.emits
     assert_equal 1, emits.length
-    assert_equal 'logpose', emits[0][0]
-    assert_equal '{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}', emits[0][2]
+    assert_equal 'path.foo.bar', emits[0][0]
+    assert_equal JSON.parse(body), emits[0][2]
   end
+
+  def test_emit_path_format_3
+    d1 = create_driver(CONFIG_OK, 'nginx.access')
+    body = '[{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}]'
+    d1.run do
+       d1.emit({'request_uri' => '/path/foo/bar/', 'request_body' => body})
+    end
+    emits = d1.emits
+    assert_equal 1, emits.length
+    assert_equal 'path.foo.bar', emits[0][0]
+    assert_equal JSON.parse(body), emits[0][2]
+  end
+
+  def test_emit_path_format_4
+    d1 = create_driver(CONFIG_OK, 'nginx.access')
+    body = '[{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}]'
+    d1.run do
+       d1.emit({'request_uri' => 'path', 'request_body' => body})
+    end
+    emits = d1.emits
+    assert_equal 1, emits.length
+    assert_equal 'path', emits[0][0]
+    assert_equal JSON.parse(body), emits[0][2]
+  end
+  
+  def test_emit_json_parse
+    d1 = create_driver(CONFIG_OK, 'nginx.access')
+    body = '{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}'
+    d1.run do
+       d1.emit({'request_uri' => 'path/foo/bar', 'request_body' => body})
+    end
+    emits = d1.emits
+    assert_equal 1, emits.length
+    assert_equal 'path.foo.bar', emits[0][0]
+    assert_equal JSON.parse(body), emits[0][2]
+  end
+  
+  def test_emit_json_parse_2
+    d1 = create_driver(CONFIG_OK, 'nginx.access')
+    body = '-'
+    d1.run do
+       d1.emit({'request_uri' => 'path/foo/bar', 'request_body' => body})
+    end
+    emits = d1.emits
+    assert_equal 0, emits.length
+  end
+
+
 end
 
