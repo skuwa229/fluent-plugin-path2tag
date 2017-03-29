@@ -32,7 +32,7 @@ class Fluent::Path2tagOutput < Fluent::Output
       
       log.info "[path2tag] change tag to #{rewrited_tag}"
       
-      if newrecords.class == "Array"
+      if newrecords.kind_of?(Array)
         newrecords.each do |r|
           router.emit(rewrited_tag, time, r)
         end
