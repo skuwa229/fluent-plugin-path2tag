@@ -10,10 +10,10 @@ Convert uri to tag. And reformat json data.
 $ gem install fluent-plugin-path2tag
 
 # for td-agent (Legacy)
-$ sudo /usr/lib64/fluent/ruby/bin/fluent-gem install ffluent-plugin-path2tag -v 1.0.0
+$ sudo /usr/lib64/fluent/ruby/bin/fluent-gem install ffluent-plugin-path2tag -v 1.0.1
 
 # for td-agent2 (with fluentd v0.12)
-$ sudo td-agent-gem install fluent-plugin-path2tag -v 1.0.0
+$ sudo td-agent-gem install fluent-plugin-path2tag -v 1.0.1
 ```
 
 ## Configuration
