@@ -57,24 +57,24 @@ class Fluent::Path2tagOutput < Fluent::Output
     path_key, data_key = @rewriterules[0]
     
     unless record.has_key?(path_key)
-      log.warn "[path2tag] record has no path_key <#{path_key}>"
+      log.warn "[path2tag] record has no path_key <#{path_key}>, record => #{record}"
       return tag, nil
     end
 
     unless record.has_key?(data_key)
-      log.warn "[path2tag] record has no data_key <#{data_key}>"
+      log.warn "[path2tag] record has no data_key <#{data_key}>, record => #{record}"
       return tag, nil
     end
 
     if record[data_key].empty?
-      log.warn "[path2tag] record is empty <#{data_key}>"
+      log.warn "[path2tag] record is empty <#{data_key}>, record => #{record}"
       return tag, nil
     end
 
     begin
       newrecords = parse(record[data_key])
     rescue => e
-      log.warn "[path2tag] JSON parse error!"
+      log.warn "[path2tag] JSON parse error!, record => #{record}"
       return tag, nil
     end
 
