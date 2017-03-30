@@ -88,6 +88,11 @@ class Fluent::Path2tagOutput < Fluent::Output
     end
     newtag = newtag.gsub("/", ".")
     
+    index = newtag.index("?")
+    unless index.nil?
+      newtag = newtag.slice(0, newtag.index("?"))
+    end
+
     return newtag, newrecords
   end
 end

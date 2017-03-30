@@ -127,6 +127,18 @@ class Path2tagTest < Test::Unit::TestCase
     assert_equal 'path', emits[0][0]
     assert_equal JSON.parse(body), emits[0][2]
   end
+
+  def test_emit_path_format_5
+    d1 = create_driver(CONFIG_OK, 'nginx.access')
+    body = '{"fluentd_time":"2017-02-20 10:39:14 UTC","unique_id":"123ABC","device_token":"ABC123"}'
+    d1.run do
+       d1.emit({'request_uri' => 'path/foo/bar?param1=1?param2=2', 'request_body' => body})
+    end
+    emits = d1.emits
+    assert_equal 1, emits.length
+    assert_equal 'path.foo.bar', emits[0][0]
+    assert_equal JSON.parse(body), emits[0][2]
+  end
   
   def test_emit_json_parse
     d1 = create_driver(CONFIG_OK, 'nginx.access')
