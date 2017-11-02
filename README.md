@@ -1,5 +1,7 @@
 # fluent-plugin-path2tag
 
+[![Build Status](https://travis-ci.org/skuwa229/fluent-plugin-path2tag.svg?branch=master)](https://travis-ci.org/skuwa229/fluent-plugin-path2tag)
+
 ## Overview
 A fluent output filter plugin for Nginx's logging.  
 Convert uri to tag. And reformat json data.
